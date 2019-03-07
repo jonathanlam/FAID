@@ -1,4 +1,13 @@
 def nextDay(date):
+    """
+    Takes a date of the format dd/mm
+    and returns the date of the day after
+    in the format of a string "dd/mm".
+    This does not take into account leap years,
+    as the dates do not contain years.
+    This is used when a worker is working night shift
+    and their shift goes into the next day.
+    """
     date = date.split("/")
     day = int(date[0])
     month = int(date[1])
@@ -40,29 +49,13 @@ def time_to_dic(shift_raw, date, name, id):
     return shift
 
 def process_line(line, id):
-    #print(line + " " + str(id))
     line = line.split(",")
-    '''if re.match(r"600[0-9]+\/420[0-9]+", line[0]):
-        print("ariba detected")
-        line.pop(0)
-        line.pop(8)   '''
 
     id = len(results) + 1
-
     name = ''.join([i for i in line[10] if not i.isdigit()]).strip()
-    mon_shift = line[1]
-    tue_shift = line[2]
-    wed_shift = line[3]
-    thu_shift = line[4]
-    fri_shift = line[5]
-    sat_shift = line[6]
-    sun_shift = line[7]
-
-    shifts = []
     worker = []
 
     for i in range(1,8): #1 to 7 inclusive
-        #print(i)
         if re.match(r"[0-9]{4}-[0-9]{4}", line[i]):
             worker.append(time_to_dic(line[i], dates[i-1], name, id))
 
@@ -81,12 +74,10 @@ def formatShift(shift):
     de = shift["date_end"].split("/")
     st = shift["time_start"]
     et = shift["time_end"]
-    #answer = str(shift["id"]) + ","
     answer = str(shift["name"]) + ","
     format_start = str(ds[0]) + " " + months[int(ds[1])-1] + " " + str(year) + " " +  st[0:2] + ":" + st[2:4]
     format_end = de[0] + " " + months[int(de[1])-1] + " " + str(year)   + " " +  et[0:2] + ":" + et[2:4]
     return answer + format_start + ",0," + format_start + ","+ format_end + ",0," + format_end + ",Full,0,Moderate\n"
-
 
 import re
 import datetime
