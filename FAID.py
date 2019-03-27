@@ -210,3 +210,25 @@ output_file = open("Glenfield.rtq","a")
 for shift in results:
     formatted = formatShift(shift)
     output_file.write(str(formatted))
+    
+##################
+line = input_file.readline()
+results = [] # results
+while ("Qualification" not in line):
+    if not line:
+        break
+    if bool(re.search(r"[0-9]{4}-[0-9]{4}", line)):
+        if "Assist" in line:
+            i+=1
+        else:
+            worker_data = process_line(line, i)
+            i+=1
+            #print(worker_data)
+            results.extend(worker_data)
+    line = input_file.readline()
+
+
+output_file = open("Sydenham.rtq","a")
+for shift in results:
+    formatted = formatShift(shift)
+    output_file.write(str(formatted))
