@@ -68,7 +68,7 @@ def toMonth (num):
     return dic[num]
 
 def formatShift(shift):
-    months = ["Jan", "Feb", "Mar", "Apr", "May"]
+    months = ["Jan", "Feb", "Mar", "Apr", "May"] # fix this, and make obsolete, use toMonth instead
     year = datetime.datetime.now().year
     ds = shift["date_start"].split("/")
     de = shift["date_end"].split("/")
